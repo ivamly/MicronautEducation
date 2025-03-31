@@ -81,4 +81,16 @@ public class Citizen {
     public void setHouses(Set<House> houses) {
         this.houses = houses;
     }
+
+    @Override
+    public String toString() {
+        return "Citizen{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", passport=" + passport +
+                ", car=" + car +
+                ", houses=" + houses +
+                '}';
+    }
 }

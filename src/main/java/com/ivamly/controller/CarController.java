@@ -9,6 +9,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
+import reactor.core.publisher.Mono;
 
 @Controller("/car")
 public class CarController {
@@ -17,12 +18,12 @@ public class CarController {
     private CarFacade carFacade;
 
     @Get
-    public GetCarResponse get(String id) {
+    public Mono<GetCarResponse> get(String id) {
         return carFacade.get(id);
     }
 
     @Post
-    public GetCarResponse create(@Body @Valid CreateCarRequest request) {
+    public Mono<GetCarResponse> create(@Body @Valid CreateCarRequest request) {
         return carFacade.create(request);
     }
 }

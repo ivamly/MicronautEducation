@@ -34,8 +34,24 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-http-client</artifactId>
+            <groupId>com.ongres.scram</groupId>
+            <artifactId>client</artifactId>
+            <version>2.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>context-propagation</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.reactor</groupId>
+            <artifactId>micronaut-reactor</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.reactor</groupId>
+            <artifactId>micronaut-reactor-http-client</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -60,12 +76,7 @@
         </dependency>
         <dependency>
             <groupId>io.micronaut.data</groupId>
-            <artifactId>micronaut-data-tx-hibernate</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.sql</groupId>
-            <artifactId>micronaut-hibernate-jpa</artifactId>
+            <artifactId>micronaut-data-hibernate-reactive</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -74,16 +85,16 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
             <groupId>io.micronaut.liquibase</groupId>
             <artifactId>micronaut-liquibase</artifactId>
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -94,6 +105,12 @@
             <artifactId>slf4j-simple</artifactId>
             <version>2.0.17</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micronaut.testresources</groupId>
+            <artifactId>micronaut-test-resources-client</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -111,6 +128,21 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -119,6 +151,16 @@
                 <groupId>io.micronaut.maven</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
                 <configuration>
+                    <testResourcesDependencies>
+                        <dependency>
+                            <groupId>io.micronaut.testresources</groupId>
+                            <artifactId>micronaut-test-resources-hibernate-reactive-postgresql</artifactId>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.postgresql</groupId>
+                            <artifactId>postgresql</artifactId>
+                        </dependency>
+                    </testResourcesDependencies>
                     <configFile>aot-${packaging}.properties</configFile>
                 </configuration>
             </plugin>
@@ -130,7 +172,28 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <annotationProcessorPaths combine.children="append">
+                    <annotationProcessorPaths combine.self="override">
+                        <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-inject-java</artifactId>
+                            <version>${micronaut.core.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut.data</groupId>
+                            <artifactId>micronaut-data-processor</artifactId>
+                            <version>${micronaut.data.version}</version>
+                            <exclusions>
+                                <exclusion>
+                                    <groupId>io.micronaut</groupId>
+                                    <artifactId>micronaut-inject</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-graal</artifactId>
+                            <version>${micronaut.core.version}</version>
+                        </path>
                         <path>
                             <groupId>io.micronaut</groupId>
                             <artifactId>micronaut-http-validation</artifactId>
@@ -160,12 +223,11 @@
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
-                        <arg>-Amicronaut.processing.group=example.micronaut</arg>
-                        <arg>-Amicronaut.processing.module=default</arg>
+                        <arg>-Amicronaut.processing.group=com.example</arg>
+                        <arg>-Amicronaut.processing.module=demo</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>

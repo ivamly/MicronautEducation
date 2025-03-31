@@ -6,6 +6,7 @@ import com.ivamly.model.Car;
 import com.ivamly.service.CarService;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
@@ -15,23 +16,12 @@ public class CarFacade {
     @Inject
     private CarService carService;
 
-    public GetCarResponse get(String id) {
-        Car carEntity = carService.get(UUID.fromString(id));
-
-        if (carEntity == null) {
-            throw new RuntimeException("Car not found");
-        }
-
-        GetCarResponse getCarResponse = new GetCarResponse();
-
-        getCarResponse.setId(String.valueOf(carEntity.getId()));
-        getCarResponse.setBrand(carEntity.getBrand());
-        getCarResponse.setModel(carEntity.getModel());
-
-        return getCarResponse;
+    public Mono<GetCarResponse> get(String id) {
+        return carService.get(UUID.fromString(id))
+                .map(this::convert);
     }
 
-    public GetCarResponse create(CreateCarRequest car) {
+    public Mono<GetCarResponse> create(CreateCarRequest car) {
         Car carEntity = new Car();
 
         carEntity.setId(UUID.randomUUID());
@@ -40,11 +30,20 @@ public class CarFacade {
 
         carService.save(carEntity);
 
+        return Mono.just(convert(carEntity));
+    }
+
+    private GetCarResponse convert(Car car) {
+
+        if (car == null) {
+            throw new RuntimeException("Car not found");
+        }
+
         GetCarResponse getCarResponse = new GetCarResponse();
 
-        getCarResponse.setId(String.valueOf(carEntity.getId()));
-        getCarResponse.setBrand(carEntity.getBrand());
-        getCarResponse.setModel(carEntity.getModel());
+        getCarResponse.setId(String.valueOf(car.getId()));
+        getCarResponse.setBrand(car.getBrand());
+        getCarResponse.setModel(car.getModel());
 
         return getCarResponse;
     }

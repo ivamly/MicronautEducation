@@ -10,6 +10,7 @@ import com.ivamly.model.Passport;
 import com.ivamly.service.CitizenService;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
@@ -19,40 +20,12 @@ public class CitizenFacade {
     @Inject
     private CitizenService citizenService;
 
-    public GetCitizenResponse get(String id) {
-        Citizen citizenEntity = citizenService.get(UUID.fromString(id));
-
-        if (citizenEntity == null) {
-            throw new RuntimeException("Citizen not found");
-        }
-
-        GetCitizenResponse getCitizenResponse = new GetCitizenResponse();
-
-        getCitizenResponse.setId(String.valueOf(citizenEntity.getId()));
-        getCitizenResponse.setName(citizenEntity.getName());
-        getCitizenResponse.setAge(citizenEntity.getAge());
-
-        PassportDto passportDto = new PassportDto();
-
-        passportDto.setId(String.valueOf(citizenEntity.getPassport().getId()));
-        passportDto.setSeries(citizenEntity.getPassport().getSeries());
-        passportDto.setNumber(citizenEntity.getPassport().getNumber());
-
-        AddressDto addressDto = new AddressDto();
-
-        addressDto.setId(String.valueOf(citizenEntity.getPassport().getAddress().getId()));
-        addressDto.setCountry(citizenEntity.getPassport().getAddress().getCountry());
-        addressDto.setCity(citizenEntity.getPassport().getAddress().getCity());
-        addressDto.setStreet(citizenEntity.getPassport().getAddress().getStreet());
-
-        passportDto.setAddress(addressDto);
-
-        getCitizenResponse.setPassport(passportDto);
-
-        return getCitizenResponse;
+    public Mono<GetCitizenResponse> get(String id) {
+        return citizenService.get(UUID.fromString(id))
+                .map(this::convert);
     }
 
-    public GetCitizenResponse create(CreateCitizenRequest citizen) {
+    public Mono<GetCitizenResponse> create(CreateCitizenRequest citizen) {
         Citizen citizenEntity = new Citizen();
 
         citizenEntity.setId(UUID.randomUUID());
@@ -78,24 +51,32 @@ public class CitizenFacade {
 
         citizenService.save(citizenEntity);
 
+        return Mono.just(convert(citizenEntity));
+    }
+
+    private GetCitizenResponse convert(Citizen citizen) {
+        if (citizen == null) {
+            throw new RuntimeException("Citizen not found");
+        }
+
         GetCitizenResponse getCitizenResponse = new GetCitizenResponse();
 
-        getCitizenResponse.setId(String.valueOf(citizenEntity.getId()));
-        getCitizenResponse.setName(citizenEntity.getName());
-        getCitizenResponse.setAge(citizenEntity.getAge());
+        getCitizenResponse.setId(String.valueOf(citizen.getId()));
+        getCitizenResponse.setName(citizen.getName());
+        getCitizenResponse.setAge(citizen.getAge());
 
         PassportDto passportDto = new PassportDto();
 
-        passportDto.setId(String.valueOf(citizenEntity.getPassport().getId()));
-        passportDto.setSeries(citizenEntity.getPassport().getSeries());
-        passportDto.setNumber(citizenEntity.getPassport().getNumber());
+        passportDto.setId(String.valueOf(citizen.getPassport().getId()));
+        passportDto.setSeries(citizen.getPassport().getSeries());
+        passportDto.setNumber(citizen.getPassport().getNumber());
 
         AddressDto addressDto = new AddressDto();
 
-        addressDto.setId(String.valueOf(citizenEntity.getPassport().getAddress().getId()));
-        addressDto.setCountry(citizenEntity.getPassport().getAddress().getCountry());
-        addressDto.setCity(citizenEntity.getPassport().getAddress().getCity());
-        addressDto.setStreet(citizenEntity.getPassport().getAddress().getStreet());
+        addressDto.setId(String.valueOf(citizen.getPassport().getAddress().getId()));
+        addressDto.setCountry(citizen.getPassport().getAddress().getCountry());
+        addressDto.setCity(citizen.getPassport().getAddress().getCity());
+        addressDto.setStreet(citizen.getPassport().getAddress().getStreet());
 
         passportDto.setAddress(addressDto);
 

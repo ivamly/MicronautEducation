@@ -9,6 +9,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
+import reactor.core.publisher.Mono;
 
 @Controller("/house")
 public class HouseController {
@@ -17,12 +18,12 @@ public class HouseController {
     private HouseFacade houseFacade;
 
     @Get
-    public GetHouseResponse get(String id) {
+    public Mono<GetHouseResponse> get(String id) {
         return houseFacade.get(id);
     }
 
     @Post
-    public GetHouseResponse create(@Body @Valid CreateHouseRequest request) {
+    public Mono<GetHouseResponse> create(@Body @Valid CreateHouseRequest request) {
         return houseFacade.create(request);
     }
 }

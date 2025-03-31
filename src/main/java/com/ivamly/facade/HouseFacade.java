@@ -8,6 +8,7 @@ import com.ivamly.model.House;
 import com.ivamly.service.HouseService;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
@@ -17,31 +18,12 @@ public class HouseFacade {
     @Inject
     private HouseService houseService;
 
-    public GetHouseResponse get(String id) {
-        House houseEntity = houseService.get(UUID.fromString(id));
-
-        if (houseEntity == null) {
-            throw new RuntimeException("House not found");
-        }
-
-        GetHouseResponse getHouseResponse = new GetHouseResponse();
-
-        getHouseResponse.setId(String.valueOf(houseEntity.getId()));
-        getHouseResponse.setFloor(houseEntity.getFloor());
-
-        AddressDto addressDto = new AddressDto();
-
-        addressDto.setId(String.valueOf(houseEntity.getAddress().getId()));
-        addressDto.setCountry(houseEntity.getAddress().getCountry());
-        addressDto.setCity(houseEntity.getAddress().getCity());
-        addressDto.setStreet(houseEntity.getAddress().getStreet());
-
-        getHouseResponse.setAddress(addressDto);
-
-        return getHouseResponse;
+    public Mono<GetHouseResponse> get(String id) {
+        return houseService.get(UUID.fromString(id))
+                .map(this::convert);
     }
 
-    public GetHouseResponse create(CreateHouseRequest house) {
+    public Mono<GetHouseResponse> create(CreateHouseRequest house) {
         House houseEntity = new House();
 
         houseEntity.setId(UUID.randomUUID());
@@ -58,17 +40,25 @@ public class HouseFacade {
 
         houseService.save(houseEntity);
 
+        return Mono.just(convert(houseEntity));
+    }
+
+    private GetHouseResponse convert(House house) {
+        if (house == null) {
+            throw new RuntimeException("House not found");
+        }
+
         GetHouseResponse getHouseResponse = new GetHouseResponse();
 
-        getHouseResponse.setId(String.valueOf(houseEntity.getId()));
-        getHouseResponse.setFloor(houseEntity.getFloor());
+        getHouseResponse.setId(String.valueOf(house.getId()));
+        getHouseResponse.setFloor(house.getFloor());
 
         AddressDto addressDto = new AddressDto();
 
-        addressDto.setId(String.valueOf(houseEntity.getAddress().getId()));
-        addressDto.setCountry(houseEntity.getAddress().getCountry());
-        addressDto.setCity(houseEntity.getAddress().getCity());
-        addressDto.setStreet(houseEntity.getAddress().getStreet());
+        addressDto.setId(String.valueOf(house.getAddress().getId()));
+        addressDto.setCountry(house.getAddress().getCountry());
+        addressDto.setCity(house.getAddress().getCity());
+        addressDto.setStreet(house.getAddress().getStreet());
 
         getHouseResponse.setAddress(addressDto);
 
