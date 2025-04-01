@@ -5,10 +5,19 @@ import io.micronaut.serde.annotation.Serdeable;
 @Serdeable
 public class HouseResponse {
 
+    /**
+     * Identifier.
+     */
     private String id;
 
+    /**
+     * Floor number.
+     */
     private Integer floor;
 
+    /**
+     * Address information {@link AddressResponse}.
+     */
     private AddressResponse address;
 
     public String getId() {

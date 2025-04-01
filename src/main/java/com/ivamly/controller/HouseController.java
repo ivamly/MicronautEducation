@@ -45,19 +45,4 @@ public class HouseController {
                         houseMapper.map(request))
                 .map(houseMapper::map);
     }
-//
-//    @Put("/{id}")
-//    public Mono<CarResponse> update(
-//            @NotEmpty @PathVariable String id,
-//            @Valid @Body UpdateHouseRequest request
-//    ) {
-//
-//    }
-//
-//    @Delete("/{id}")
-//    public void delete(
-//            @NotEmpty @PathVariable String id
-//    ) {
-//
-//    }
 }

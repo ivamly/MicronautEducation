@@ -5,12 +5,24 @@ import io.micronaut.serde.annotation.Serdeable;
 @Serdeable
 public class AddressResponse {
 
+    /**
+     * Identifier.
+     */
     private String id;
 
+    /**
+     * Country of the address.
+     */
     private String country;
 
+    /**
+     * City of the address.
+     */
     private String city;
 
+    /**
+     * Street of the address.
+     */
     private String street;
 
     public String getId() {

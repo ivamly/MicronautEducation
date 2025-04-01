@@ -1,9 +1,8 @@
 package com.ivamly.mapper;
 
-import com.ivamly.dto.response.AddressResponse;
 import com.ivamly.dto.request.CreateHouseRequest;
+import com.ivamly.dto.response.AddressResponse;
 import com.ivamly.dto.response.HouseResponse;
-import com.ivamly.dto.request.UpdateHouseRequest;
 import com.ivamly.model.Address;
 import com.ivamly.model.House;
 import jakarta.inject.Singleton;
@@ -23,14 +22,6 @@ public class HouseMapper {
         address.setStreet(source.getStreet());
 
         house.setAddress(address);
-
-        return house;
-    }
-
-    public House map(UpdateHouseRequest source) {
-        House house = new House();
-
-        house.setFloor(source.getFloor());
 
         return house;
     }

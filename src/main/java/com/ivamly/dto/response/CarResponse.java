@@ -5,10 +5,19 @@ import io.micronaut.serde.annotation.Serdeable;
 @Serdeable
 public class CarResponse {
 
+    /**
+     * Identifier.
+     */
     private String id;
 
+    /**
+     * Brand of the car.
+     */
     private String brand;
 
+    /**
+     * Model of the car.
+     */
     private String model;
 
     public String getId() {

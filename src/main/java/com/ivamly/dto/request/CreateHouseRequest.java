@@ -7,15 +7,27 @@ import jakarta.validation.constraints.PositiveOrZero;
 @Serdeable
 public class CreateHouseRequest {
 
+    /**
+     * Floor number of the house.
+     */
     @PositiveOrZero
     private Integer floor;
 
+    /**
+     * Country where the house is located.
+     */
     @NotEmpty
     private String country;
 
+    /**
+     * City where the house is located.
+     */
     @NotEmpty
     private String city;
 
+    /**
+     * Street where the house is located.
+     */
     @NotEmpty
     private String street;
 

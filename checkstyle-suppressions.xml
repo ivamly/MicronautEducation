@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC "-//Checkstyle//DTD Suppressions 1.0//EN"
+        "https://checkstyle.sourceforge.io/dtds/suppressions_1_0.dtd">
+<suppressions>
+    <!-- Suppress missing Javadoc on method to getters/setters in DTOs and domain classes -->
+    <suppress checks="MissingJavadocMethod"
+              files="(Address|Car|Citizen|House|Passport|AddressResponse|CarResponse|CitizenResponse|HouseResponse|PassportResponse|CreateCarRequest|CreateCitizenRequest|CreateHouseRequest|UpdateAddressRequest|UpdateCarRequest|UpdateCitizenRequest|UpdateHouseRequest|UpdatePassportRequest)\.java"/>
+    <!-- Suppress missing package-info.java file warning for main application package -->
+    <suppress checks="JavadocPackage" files="Application.java"/>
+
+    <!-- Suppress utility class constructor warning for main class-->
+    <suppress checks="HideUtilityClassConstructor" files="Application.java"/>
+
+    <!-- Suppress missing Javadoc comment warning for main class-->
+    <suppress checks="MissingJavadocMethod" files="Application.java"/>
+</suppressions>

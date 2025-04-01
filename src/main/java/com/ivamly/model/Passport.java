@@ -9,13 +9,27 @@ import java.util.UUID;
 
 @Entity
 public class Passport {
+
+    /**
+     * Unique identifier for the passport.
+     */
     @Id
     private UUID id;
 
+    /**
+     * Passport series.
+     */
     private String series;
 
+    /**
+     * Passport number.
+     */
     private String number;
 
+    /**
+     * Address information.
+     * Represents a one-to-one relationship with the {@link Address} entity.
+     */
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Address address;
 

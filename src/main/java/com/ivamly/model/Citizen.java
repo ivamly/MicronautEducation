@@ -13,19 +13,41 @@ import java.util.UUID;
 
 @Entity
 public class Citizen {
+
+    /**
+     * Unique identifier for the citizen.
+     */
     @Id
     private UUID id;
 
+    /**
+     * Name of the citizen.
+     */
     private String name;
 
+    /**
+     * Age of the citizen.
+     */
     private Integer age;
 
+    /**
+     * Passport information.
+     * Represents a one-to-one relationship with the {@link Passport} entity.
+     */
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Passport passport;
 
+    /**
+     * Car information.
+     * Represents a one-to-one relationship with the {@link Car} entity.
+     */
     @OneToOne
     private Car car;
 
+    /**
+     * Set of houses associated with the citizen.
+     * Represents a many-to-many relationship with the {@link House} entity.
+     */
     @ManyToMany
     @JoinTable(
             name = "house_owners",
@@ -80,17 +102,5 @@ public class Citizen {
 
     public void setHouses(Set<House> houses) {
         this.houses = houses;
-    }
-
-    @Override
-    public String toString() {
-        return "Citizen{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", passport=" + passport +
-                ", car=" + car +
-                ", houses=" + houses +
-                '}';
     }
 }

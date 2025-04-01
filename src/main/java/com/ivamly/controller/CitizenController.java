@@ -1,7 +1,7 @@
 package com.ivamly.controller;
 
-import com.ivamly.dto.response.CitizenResponse;
 import com.ivamly.dto.request.CreateCitizenRequest;
+import com.ivamly.dto.response.CitizenResponse;
 import com.ivamly.mapper.CitizenMapper;
 import com.ivamly.service.CitizenService;
 import io.micronaut.http.annotation.Body;
@@ -45,19 +45,4 @@ public class CitizenController {
                         citizenMapper.map(request))
                 .map(citizenMapper::map);
     }
-//
-//    @Put("/{id}")
-//    public Mono<CitizenResponse> update(
-//            @PathVariable Optional<String> id,
-//            @Valid @Body UpdateCitizenRequest request
-//    ) {
-//
-//    }
-//
-//    @Delete("/{id}")
-//    public void delete(
-//            @NotEmpty @PathVariable String id
-//    ) {
-//
-//    }
 }

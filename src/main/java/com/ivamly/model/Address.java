@@ -7,13 +7,26 @@ import java.util.UUID;
 
 @Entity
 public class Address {
+
+    /**
+     * Unique identifier for the address.
+     */
     @Id
     private UUID id;
 
+    /**
+     * Country of the address.
+     */
     private String country;
 
+    /**
+     * City of the address.
+     */
     private String city;
 
+    /**
+     * Street of the address.
+     */
     private String street;
 
     public UUID getId() {

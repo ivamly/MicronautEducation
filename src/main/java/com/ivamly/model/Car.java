@@ -7,11 +7,21 @@ import java.util.UUID;
 
 @Entity
 public class Car {
+
+    /**
+     * Unique identifier for the car.
+     */
     @Id
     private UUID id;
 
+    /**
+     * Brand of the car.
+     */
     private String brand;
 
+    /**
+     * Model of the car.
+     */
     private String model;
 
     public UUID getId() {

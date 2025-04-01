@@ -1,7 +1,7 @@
 package com.ivamly.controller;
 
-import com.ivamly.dto.response.CarResponse;
 import com.ivamly.dto.request.CreateCarRequest;
+import com.ivamly.dto.response.CarResponse;
 import com.ivamly.mapper.CarMapper;
 import com.ivamly.service.CarService;
 import io.micronaut.http.annotation.Body;
@@ -45,19 +45,4 @@ public class CarController {
                         carMapper.map(request))
                 .map(carMapper::map);
     }
-//
-//    @Put("/{id}")
-//    public Mono<HouseResponse> update(
-//            @NotEmpty @PathVariable String id,
-//            @Valid @Body UpdateCarRequest request
-//    ) {
-//
-//    }
-//
-//    @Delete("/{id}")
-//    public void delete(
-//            @NotEmpty @PathVariable String id
-//    ) {
-//
-//    }
 }

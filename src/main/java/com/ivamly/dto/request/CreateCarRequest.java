@@ -6,9 +6,15 @@ import jakarta.validation.constraints.NotEmpty;
 @Serdeable
 public class CreateCarRequest {
 
+    /**
+     * Brand of the car.
+     */
     @NotEmpty
     private String brand;
 
+    /**
+     * Model of the car.
+     */
     @NotEmpty
     private String model;
 

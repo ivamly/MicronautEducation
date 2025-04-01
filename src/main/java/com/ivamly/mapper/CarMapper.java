@@ -1,8 +1,7 @@
 package com.ivamly.mapper;
 
-import com.ivamly.dto.response.CarResponse;
 import com.ivamly.dto.request.CreateCarRequest;
-import com.ivamly.dto.request.UpdateCarRequest;
+import com.ivamly.dto.response.CarResponse;
 import com.ivamly.model.Car;
 import jakarta.inject.Singleton;
 
@@ -10,15 +9,6 @@ import jakarta.inject.Singleton;
 public class CarMapper {
 
     public Car map(CreateCarRequest source) {
-        Car car = new Car();
-
-        car.setBrand(source.getBrand());
-        car.setModel(source.getModel());
-
-        return car;
-    }
-
-    public Car map(UpdateCarRequest source) {
         Car car = new Car();
 
         car.setBrand(source.getBrand());

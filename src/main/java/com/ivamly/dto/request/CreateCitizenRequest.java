@@ -7,24 +7,45 @@ import jakarta.validation.constraints.PositiveOrZero;
 @Serdeable
 public class CreateCitizenRequest {
 
+    /**
+     * Name of the citizen.
+     */
     @NotEmpty
     private String name;
 
+    /**
+     * Age of the citizen.
+     */
     @PositiveOrZero
     private Integer age;
 
+    /**
+     * Series of the identification document.
+     */
     @NotEmpty
     private String series;
 
+    /**
+     * Number of the identification document.
+     */
     @NotEmpty
     private String number;
 
+    /**
+     * Country of residence.
+     */
     @NotEmpty
     private String country;
 
+    /**
+     * City of residence.
+     */
     @NotEmpty
     private String city;
 
+    /**
+     * Street of residence.
+     */
     @NotEmpty
     private String street;
 

@@ -5,12 +5,24 @@ import io.micronaut.serde.annotation.Serdeable;
 @Serdeable
 public class CitizenResponse {
 
+    /**
+     * Identifier.
+     */
     private String id;
 
+    /**
+     * Name of the citizen.
+     */
     private String name;
 
+    /**
+     * Age of the citizen.
+     */
     private Integer age;
 
+    /**
+     * Passport information {@link PassportResponse}.
+     */
     private PassportResponse passport;
 
     public String getId() {

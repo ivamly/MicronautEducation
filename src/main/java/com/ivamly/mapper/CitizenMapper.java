@@ -1,10 +1,9 @@
 package com.ivamly.mapper;
 
+import com.ivamly.dto.request.CreateCitizenRequest;
 import com.ivamly.dto.response.AddressResponse;
 import com.ivamly.dto.response.CitizenResponse;
-import com.ivamly.dto.request.CreateCitizenRequest;
 import com.ivamly.dto.response.PassportResponse;
-import com.ivamly.dto.request.UpdateCitizenRequest;
 import com.ivamly.model.Address;
 import com.ivamly.model.Citizen;
 import com.ivamly.model.Passport;
@@ -33,15 +32,6 @@ public class CitizenMapper {
         passport.setAddress(address);
 
         citizen.setPassport(passport);
-
-        return citizen;
-    }
-
-    public Citizen map(UpdateCitizenRequest source) {
-        Citizen citizen = new Citizen();
-
-        citizen.setName(source.getName());
-        citizen.setAge(source.getAge());
 
         return citizen;
     }
