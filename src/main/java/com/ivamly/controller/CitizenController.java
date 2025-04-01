@@ -1,29 +1,63 @@
 package com.ivamly.controller;
 
-import com.ivamly.dto.CreateCitizenRequest;
-import com.ivamly.dto.GetCitizenResponse;
-import com.ivamly.facade.CitizenFacade;
+import com.ivamly.dto.response.CitizenResponse;
+import com.ivamly.dto.request.CreateCitizenRequest;
+import com.ivamly.mapper.CitizenMapper;
+import com.ivamly.service.CitizenService;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import reactor.core.publisher.Mono;
 
-@Controller("/citizen")
+import java.util.UUID;
+
+@Controller("/citizens")
 public class CitizenController {
 
-    @Inject
-    private CitizenFacade citizenFacade;
+    private final CitizenService citizenService;
+    private final CitizenMapper citizenMapper;
 
-    @Get
-    public Mono<GetCitizenResponse> get(String id) {
-        return citizenFacade.get(id);
+    @Inject
+    public CitizenController(CitizenService citizenService, CitizenMapper citizenMapper) {
+        this.citizenService = citizenService;
+        this.citizenMapper = citizenMapper;
+    }
+
+    @Get("/{id}")
+    public Mono<CitizenResponse> get(
+            @NotEmpty @PathVariable String id
+    ) {
+        return citizenService.get(
+                        UUID.fromString(id))
+                .map(citizenMapper::map);
     }
 
     @Post
-    public Mono<GetCitizenResponse> create(@Body @Valid CreateCitizenRequest request) {
-        return citizenFacade.create(request);
+    public Mono<CitizenResponse> create(
+            @Valid @Body CreateCitizenRequest request
+    ) {
+        return citizenService.save(
+                        citizenMapper.map(request))
+                .map(citizenMapper::map);
     }
+//
+//    @Put("/{id}")
+//    public Mono<CitizenResponse> update(
+//            @PathVariable Optional<String> id,
+//            @Valid @Body UpdateCitizenRequest request
+//    ) {
+//
+//    }
+//
+//    @Delete("/{id}")
+//    public void delete(
+//            @NotEmpty @PathVariable String id
+//    ) {
+//
+//    }
 }

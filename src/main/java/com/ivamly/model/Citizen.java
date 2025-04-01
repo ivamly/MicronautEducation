@@ -20,7 +20,7 @@ public class Citizen {
 
     private Integer age;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Passport passport;
 
     @OneToOne

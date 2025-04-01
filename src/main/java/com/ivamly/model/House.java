@@ -14,7 +14,7 @@ public class House {
 
     private Integer floor;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Address address;
 
     public UUID getId() {

@@ -16,7 +16,7 @@ public class Passport {
 
     private String number;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Address address;
 
     public UUID getId() {
