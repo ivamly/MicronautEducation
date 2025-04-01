@@ -19,6 +19,7 @@
         <jdk.version>21</jdk.version>
         <release.version>21</release.version>
         <checkstyle.version>3.6.0</checkstyle.version>
+        <archunit.version>1.4.0</archunit.version>
         <micronaut.version>4.7.6</micronaut.version>
         <micronaut.aot.enabled>false</micronaut.aot.enabled>
         <micronaut.aot.packageName>com.ivamly.aot.generated</micronaut.aot.packageName>
@@ -34,6 +35,12 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>${checkstyle.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.ongres.scram</groupId>
             <artifactId>client</artifactId>
@@ -101,12 +108,6 @@
             <artifactId>logback-classic</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>2.0.17</version>
-            <scope>runtime</scope>
-        </dependency>
 
         <dependency>
             <groupId>io.micronaut.testresources</groupId>
@@ -115,9 +116,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
-            <version>${checkstyle.version}</version>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
+            <version>${archunit.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.micronaut.test</groupId>
