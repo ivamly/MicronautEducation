@@ -1,9 +1,9 @@
-package com.ivamly.dto;
+package com.ivamly.dto.response;
 
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
-public class GetCitizenResponse {
+public class CitizenResponse {
 
     private String id;
 
@@ -11,7 +11,7 @@ public class GetCitizenResponse {
 
     private Integer age;
 
-    private PassportDto passport;
+    private PassportResponse passport;
 
     public String getId() {
         return id;
@@ -37,11 +37,11 @@ public class GetCitizenResponse {
         this.age = age;
     }
 
-    public PassportDto getPassport() {
+    public PassportResponse getPassport() {
         return passport;
     }
 
-    public void setPassport(PassportDto passport) {
+    public void setPassport(PassportResponse passport) {
         this.passport = passport;
     }
 }

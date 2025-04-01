@@ -1,30 +1,24 @@
-package com.ivamly.dto;
+package com.ivamly.dto.response;
 
 import io.micronaut.serde.annotation.Serdeable;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.PositiveOrZero;
 
 @Serdeable
-public class CreateHouseRequest {
+public class AddressResponse {
 
-    @PositiveOrZero
-    private Integer floor;
+    private String id;
 
-    @NotEmpty
     private String country;
 
-    @NotEmpty
     private String city;
 
-    @NotEmpty
     private String street;
 
-    public Integer getFloor() {
-        return floor;
+    public String getId() {
+        return id;
     }
 
-    public void setFloor(Integer floor) {
-        this.floor = floor;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCountry() {

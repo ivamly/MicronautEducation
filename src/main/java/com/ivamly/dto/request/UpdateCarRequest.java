@@ -1,23 +1,16 @@
-package com.ivamly.dto;
+package com.ivamly.dto.request;
 
 import io.micronaut.serde.annotation.Serdeable;
+import jakarta.validation.constraints.NotEmpty;
 
 @Serdeable
-public class GetCarResponse {
+public class UpdateCarRequest {
 
-    private String id;
-
+    @NotEmpty
     private String brand;
 
+    @NotEmpty
     private String model;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getBrand() {
         return brand;

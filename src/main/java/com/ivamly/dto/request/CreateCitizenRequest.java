@@ -1,4 +1,4 @@
-package com.ivamly.dto;
+package com.ivamly.dto.request;
 
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.validation.constraints.NotEmpty;
